@@ -1,0 +1,102 @@
+@{
+    ViewBag.Title = "Banking Dashboard";
+}
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+            <h2>Welcome, @Session["UserFullName"]</h2>
+            <hr />
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-4">
+            <div class="panel panel-primary">
+                <div class="panel-heading">
+                    <h3 class="panel-title">Account Balance</h3>
+                </div>
+                <div class="panel-body">
+                    <h3>@String.Format("{0:C}", ViewBag.Balance)</h3>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-4">
+            <div class="panel panel-success">
+                <div class="panel-heading">
+                    <h3 class="panel-title">Quick Actions</h3>
+                </div>
+                <div class="panel-body">
+                    <div class="list-group">
+                        @Html.ActionLink("Deposit", "Deposit", "Banking", null, new { @class = "list-group-item" })
+                        @Html.ActionLink("Withdraw", "Withdraw", "Banking", null, new { @class = "list-group-item" })
+                        @Html.ActionLink("Transaction History", "TransactionHistory", "Banking", null, new { @class = "list-group-item" })
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-4">
+            <div class="panel panel-info">
+                <div class="panel-heading">
+                    <h3 class="panel-title">Account Information</h3>
+                </div>
+                <div class="panel-body">
+                    <p><strong>Account Number:</strong> @Session["AccountNumber"]</p>
+                    @Html.ActionLink("View Profile", "UserProfile", "Account", null, new { @class = "btn btn-default" })
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title">Recent Transactions</h3>
+                </div>
+                <div class="panel-body">
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th>Date</th>
+                                <th>Type</th>
+                                <th>Amount</th>
+                                <th>Balance After</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var transaction in ViewBag.RecentTransactions)
+                            {
+                                <tr>
+                                    <td>@transaction.TransactionDate.ToString("MM/dd/yyyy HH:mm")</td>
+                                    <td>@transaction.Type</td>
+                                    <td>@String.Format("{0:C}", transaction.Amount)</td>
+                                    <td>@String.Format("{0:C}", transaction.BalanceAfterTransaction)</td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                    @Html.ActionLink("View All Transactions", "TransactionHistory", "Banking", null, new { @class = "btn btn-primary" })
+                </div>
+            </div>
+        </div>
+    </div>
+
+    @if ((bool)Session["IsAdmin"])
+    {
+        <div class="row">
+            <div class="col-md-12">
+                <div class="panel panel-warning">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">Admin Actions</h3>
+                    </div>
+                    <div class="panel-body">
+                        @Html.ActionLink("View All Users", "UserList", "Account", null, new { @class = "btn btn-warning" })
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+</div> 

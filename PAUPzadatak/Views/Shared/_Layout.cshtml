@@ -1,0 +1,60 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title - Banking Application</title>
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+</head>
+<body>
+    <nav class="navbar navbar-expand-sm navbar-dark bg-dark">
+        <div class="container">
+            @Html.ActionLink("Banking App", "Dashboard", "Banking", new { area = "" }, new { @class = "navbar-brand" })
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav">
+                    @if (Session["UserId"] != null)
+                    {
+                        <li class="nav-item">@Html.ActionLink("Dashboard", "Dashboard", "Banking", null, new { @class = "nav-link" })</li>
+                        <li class="nav-item">@Html.ActionLink("Deposit", "Deposit", "Banking", null, new { @class = "nav-link" })</li>
+                        <li class="nav-item">@Html.ActionLink("Withdraw", "Withdraw", "Banking", null, new { @class = "nav-link" })</li>
+                        <li class="nav-item">@Html.ActionLink("Transfer", "Transfer", "Banking", null, new { @class = "nav-link" })</li>
+                        <li class="nav-item">@Html.ActionLink("History", "TransactionHistory", "Banking", null, new { @class = "nav-link" })</li>
+                        if (Session["IsAdmin"] != null && (bool)Session["IsAdmin"])
+                        {
+                            <li class="nav-item">@Html.ActionLink("All Users", "UserList", "Account", null, new { @class = "nav-link" })</li>
+                            <li class="nav-item">@Html.ActionLink("Register User", "Register", "Account", null, new { @class = "nav-link" })</li>
+                        }
+                    }
+                </ul>
+                <ul class="navbar-nav ms-auto">
+                    @if (Session["UserId"] != null)
+                    {
+                        <li class="nav-item">
+                            <span class="nav-link">Welcome, @Session["UserFullName"]</span>
+                        </li>
+                        <li class="nav-item">
+                            @Html.ActionLink("Logout", "Logout", "Account", null, new { @class = "nav-link" })
+                        </li>
+                    }
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container body-content">
+        @RenderBody()
+        <hr />
+        <footer>
+            <!-- Copyright removed -->
+        </footer>
+    </div>
+
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    @RenderSection("scripts", required: false)
+</body>
+</html>

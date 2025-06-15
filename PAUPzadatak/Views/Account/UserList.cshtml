@@ -1,0 +1,53 @@
+@model IEnumerable<PAUPzadatak.Models.User>
+
+@{
+    ViewBag.Title = "User List";
+}
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="panel panel-primary">
+                <div class="panel-heading">
+                    <h3 class="panel-title">User List</h3>
+                </div>
+                <div class="panel-body">
+                    <p>
+                        @Html.ActionLink("Create New User", "Register", null, new { @class = "btn btn-success" })
+                    </p>
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th>@Html.DisplayNameFor(model => model.Id)</th>
+                                <th>@Html.DisplayNameFor(model => model.AccountNumber)</th>
+                                <th>@Html.DisplayNameFor(model => model.Username)</th>
+                                <th>@Html.DisplayNameFor(model => model.FullName)</th>
+                                <th>@Html.DisplayNameFor(model => model.Email)</th>
+                                <th>@Html.DisplayNameFor(model => model.PhoneNumber)</th>
+                                <th>@Html.DisplayNameFor(model => model.Balance)</th>
+                                <th>@Html.DisplayNameFor(model => model.AccountCreatedDate)</th>
+                                <th>@Html.DisplayNameFor(model => model.LastLoginDate)</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model)
+                            {
+                                <tr>
+                                    <td>@Html.DisplayFor(modelItem => item.Id)</td>
+                                    <td>@Html.DisplayFor(modelItem => item.AccountNumber)</td>
+                                    <td>@Html.DisplayFor(modelItem => item.Username)</td>
+                                    <td>@Html.DisplayFor(modelItem => item.FullName)</td>
+                                    <td>@Html.DisplayFor(modelItem => item.Email)</td>
+                                    <td>@Html.DisplayFor(modelItem => item.PhoneNumber)</td>
+                                    <td>@String.Format("{0:C}", item.Balance)</td>
+                                    <td>@item.AccountCreatedDate.ToString("MM/dd/yyyy HH:mm")</td>
+                                    <td>@(item.LastLoginDate.HasValue ? item.LastLoginDate.Value.ToString("MM/dd/yyyy HH:mm") : "Never")</td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div> 
